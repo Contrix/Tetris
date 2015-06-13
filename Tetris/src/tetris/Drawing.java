@@ -19,6 +19,8 @@ public class Drawing {
     private final int posunX = 25;
     private final int posunY = 25;
     private int px = 25;
+    private final Color primary = Color.LIGHTGREY;
+    private final Color secondary = Color.GREY;
     
     
     
@@ -38,7 +40,9 @@ public class Drawing {
             for (int i = 0; i < obj.getArray().length; i++){
                 for (int j = 0; j < obj.getArray()[0].length; j++){
                     if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                        if ((obj.getPoint().getY()) + i <= 19){
                         gc.fillRect((obj.getPoint().getX() + j) * px + posunX, (obj.getPoint().getY() + i) * px + posunY, px, px);
+                        }
                     }
                 }
             }
@@ -47,14 +51,14 @@ public class Drawing {
     }
     
     public void drawBackGround(GraphicsContext gc, double width, double height){
-        gc.setFill(Color.GREEN);
+        gc.setFill(secondary);
         gc.fillRect(0, 0, width, height);
         
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 20; j++){
-                gc.setFill(Color.GREEN);
+                gc.setFill(secondary);
                 gc.fillRect(i * px + posunX, j * px + posunY, px, px);
-                gc.setFill(Color.LIGHTGREEN);
+                gc.setFill(primary);
                 gc.fillRect(i * px + posunX, j * px + posunY, px-1, px-1);
             }
         }

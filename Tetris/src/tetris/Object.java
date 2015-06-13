@@ -5,7 +5,6 @@
  */
 package tetris;
 
-import java.lang.reflect.Array;
 import javafx.scene.paint.Color;
 
 
@@ -14,10 +13,10 @@ import javafx.scene.paint.Color;
  * @author Jirka
  */
 public class Object {
-    private final Color c = Color.AQUA;
-    private final Color t = Color.TRANSPARENT;
-    private Color[][] array = {{t, c, t}, {c, c, c}};
-    private MyPoint point = new MyPoint(3, 3);
+    protected final Color t = Color.TRANSPARENT;
+    protected Color c; 
+    protected Color[][] array;
+    protected MyPoint point = new MyPoint(3, 0);
     
     public Color[][] getArray(){
         return (array);
@@ -39,7 +38,6 @@ public class Object {
             }
         }
         array  = rotateArray;
-        System.out.println("aaaa");
     }
     
     public void rotateRight(){
@@ -63,5 +61,4 @@ public class Object {
     public void moveRight(){
         point.incX();
     }
-    
 }

@@ -5,10 +5,18 @@
  */
 package tetris;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Jirka
  */
-public class Object6 {
+public class Object6 extends Object{
+    private final Color color = Color.LIGHTGREEN;
+    private Color[][] arrayy = {{t, c, c}, {c, c, t}};
     
+    public Object6(){
+        array = this.arrayy;
+        c = this.color;
+    }
 }
