@@ -63,11 +63,11 @@ public class Tetris extends Application {
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case Q:
-                    gm.getObject().rotateLeft();
+                    gm.rotateLeft();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case E:
-                    gm.getObject().rotateRight();
+                    gm.rotateRight();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                     
@@ -84,11 +84,11 @@ public class Tetris extends Application {
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case NUMPAD7:
-                    gm.getObject().rotateLeft();
+                    gm.rotateLeft();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case NUMPAD9:
-                    gm.getObject().rotateRight();
+                    gm.rotateRight();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                     
@@ -105,11 +105,11 @@ public class Tetris extends Application {
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case DELETE:
-                    gm.getObject().rotateLeft();
+                    gm.rotateLeft();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case PAGE_DOWN:
-                    gm.getObject().rotateRight();
+                    gm.rotateRight();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                     
@@ -126,22 +126,12 @@ public class Tetris extends Application {
                     primaryStage.close();
                     break;
                 case P:
-                    /*if(gm.pause()){
+                    if(gm.pause()){
                         timer.pause();
-                        timer1.pause();
-                        timer2.pause();
-                        timer3.pause();
-                        timer4.pause();
-                        timer5.pause();
                     }
                     else{
                         timer.play();
-                        timer1.play();
-                        timer2.play();
-                        timer3.play();
-                        timer4.play();
-                        timer5.play();
-                    }*/
+                    }
                     break;
                 default:
                     break;

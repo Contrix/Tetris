@@ -7,6 +7,7 @@ package tetris;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -21,6 +22,8 @@ public class Game {
     private int score = 0;
     private int lines = 0;
     private static Object obj = new Object3();
+    private boolean pause = false;
+    private boolean move = true;
     
     
     public void newObject(){
@@ -60,9 +63,9 @@ public class Game {
         return (objects);
     }
     
-    public Object getObject(){
+    /*public Object getObject(){
         return(obj);
-    }
+    }*/
     
     public void setTime(){
         
@@ -108,14 +111,59 @@ public class Game {
     }
     
     public void moveLeft(){
-        if (obj.getPoint().getX()>0){
+        for (int i = 0; i < obj.getArray().length; i++){
+            for (int j = 0; j < obj.getArray()[0].length; j++){
+                if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                    if(obj.getPoint().getX()+j <= 0){
+                        move = false;
+                    }
+                }
+            }
+        }
+        if (move){
             obj.moveLeft();
         }
+        move  = true;
     }
     
     public void moveRight(){
-        if (obj.getPoint().getX()+obj.getArray().length < 10){
+        for (int i = 0; i < obj.getArray().length; i++){
+            for (int j = 0; j < obj.getArray()[0].length; j++){
+                if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                    if(obj.getPoint().getX()+j >= 9){
+                        move = false;
+                    }
+                }
+            }
+        }
+        if (move){
             obj.moveRight();
+        }
+        move  = true;
+    }
+    
+    public void rotateLeft(){
+        obj.rotateLeft();
+        checkRotate();
+    }
+    
+    public void rotateRight(){
+        obj.rotateRight();
+        checkRotate();
+    }
+    
+    private void checkRotate(){
+        for (int i = 0; i < obj.getArray().length; i++){
+            for (int j = 0; j < obj.getArray()[0].length; j++){
+                if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                    while(obj.getPoint().getX()+j < 0){
+                        obj.moveRight();
+                    }
+                    while(obj.getPoint().getX()+j > 9){
+                        obj.moveLeft();
+                    }
+                }
+            }
         }
     }
     
@@ -127,5 +175,10 @@ public class Game {
         lines = 0;
         objects.clear();
         newObject();
+    }
+    
+    public boolean pause(){
+        pause = !pause;
+        return pause;
     }
 }

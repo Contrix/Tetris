@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  */
 public class Object2 extends Object{
     private final Color color = Color.AQUA;
-    private Color[][] arrayy = {{c}, {c}, {c}, {c}};
+    private Color[][] arrayy = {{t, c, t, t}, {t, c, t, t}, {t, c, t, t}, {t, c, t, t}};
     
     public Object2(){
         array = this.arrayy;
@@ -22,17 +22,23 @@ public class Object2 extends Object{
     
     @Override
     public void rotateLeft(){
-        Color[][] rotateArray = {{t, t, t, t}, {t, t, t, t}, {t, t, t, t}};
-        for (int i = 0; i < getArray().length; i++){
-            for (int j = 0; j < getArray()[0].length; j++){
-                rotateArray[j][2-i] = array[i][j];
+        Color[][] rotateArray = {{t, t, t, t}, {t, t, t, t}, {t, t, t, t}, {t, t, t, t}};
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                rotateArray[3-j][i] = array[i][j];
             }
         }
         array  = rotateArray;
-        
     }
     
     @Override
     public void rotateRight(){
+        Color[][] rotateArray = {{t, t, t, t}, {t, t, t, t}, {t, t, t, t}, {t, t, t, t}};
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                rotateArray[j][3-i] = array[i][j];
+            }
+        }
+        array  = rotateArray;
     }
 }
