@@ -60,9 +60,15 @@ public class Game {
         else{
             obj.moveDown();
         }
-        if(checkCompletedLine())
-        {
-            //body ++
+        if(checkLine(19)){//checkCompletedLine()
+            for (Object o : objects){
+                if (o.getPoint().getY() >= 20){
+                    o.deactivate();
+                }
+                else{
+                    o.moveDown();
+                }
+            }
         }
     }
 
@@ -83,22 +89,22 @@ public class Game {
     }
     
     private boolean checkCompletedLine(){
-        for (int i = 0; i < 10; i++){
-            if(!isThereObject(i, 19)){
-                return false;
+        for (int i = 0; i < 20; i++){
+            if(checkLine(i)){
+                return true;
             }
         }
-        for (Object o : objects){
-            if (o.getPoint().getY() >= 20){
-                objects.remove(o);
-            }
-            else{
-                o.moveDown();
+        return false;
+    }
+    
+    private boolean checkLine(int y){
+        for (int i = 0; i < 10; i++){
+            if(!isThereObject(i, y)){
+                return false;
             }
         }
         return true;
     }
-    
     
     public void moveLeft(){
         for (int i = 0; i < obj.getArray().length; i++){
@@ -140,27 +146,31 @@ public class Game {
     
     public void rotateLeft(){
         obj.rotateLeft();
-        checkRotate();
+        if (!validRotate()){
+            obj.rotateRight();
+        }
     }
     
     public void rotateRight(){
         obj.rotateRight();
-        checkRotate();
+        if(!validRotate()){
+            obj.rotateLeft();
+        }
     }
     
-    private void checkRotate(){
+    private boolean validRotate(){
         for (int i = 0; i < obj.getArray().length; i++){
             for (int j = 0; j < obj.getArray()[0].length; j++){
                 if (obj.getArray()[i][j] != Color.TRANSPARENT){
-                    while(obj.getPoint().getX()+j < 0){
-                        obj.moveRight();
+                    if(obj.getPoint().getX()+j < 0 || obj.getPoint().getX()+j > 9){
+                        return false;
                     }
-                    while(obj.getPoint().getX()+j > 9){
-                        obj.moveLeft();
-                    }
+                    if(isThereObject(obj.getPoint().getX() + j, obj.getPoint().getY() + i))
+                        return false;
                 }
             }
         }
+        return true;
     }
     
     private boolean isThereObject(int x, int y){

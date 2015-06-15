@@ -17,6 +17,7 @@ public class Object {
     protected Color c; 
     protected Color[][] array;
     protected MyPoint point = new MyPoint(3, 0);
+    protected boolean activ = true;
     
     public Color[][] getArray(){
         return (array);
@@ -60,5 +61,9 @@ public class Object {
     
     public void moveRight(){
         point.incX();
+    }
+    
+    public void deactivate(){
+        activ = false;
     }
 }
