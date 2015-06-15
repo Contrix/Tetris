@@ -51,7 +51,7 @@ public class Tetris extends Application {
             //System.out.println(e.getCode());
             switch (e.getCode()) {
                 case S:
-                    gm.moveDown();
+                    gm.next();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case A:
@@ -72,7 +72,7 @@ public class Tetris extends Application {
                     break;
                     
                 case NUMPAD2:
-                    gm.moveDown();
+                    gm.next();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case NUMPAD4:
@@ -93,7 +93,7 @@ public class Tetris extends Application {
                     break;
                     
                 case DOWN:
-                    gm.moveDown();
+                    gm.next();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case LEFT:

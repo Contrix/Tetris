@@ -54,67 +54,60 @@ public class Game {
     }
     
     public void next(){
-        obj.moveDown();
-        isDown();
-        isUnder();
-    }
-    
-    public ArrayList<Object> getObjects(){
-        return (objects);
-    }
-    
-    /*public Object getObject(){
-        return(obj);
-    }*/
-    
-    public void setTime(){
-        
-    }
-    
-    public int[] getTime(){
-        return (time);
-    }
-    
-    public int getLevel(){
-        return (level);
-    }
-    
-    public int getScore(){
-        return (score);
-    }
-    
-    public int getLines(){
-        return(lines);
-    }
-    
-    public boolean getGameOver(){
-        return (gameOver);
-    }
-    
-    public void setGameOver(){
-        gameOver = true;
-    }
-    
-    private void isUnder(){
-        if (obj.getPoint().getY() >= 20){
-            objects.remove(obj);
+        if (isDown()){
             newObject();
         }
+        else{
+            obj.moveDown();
+        }
+        if(checkCompletedLine())
+        {
+            //body ++
+        }
+    }
+
+    private boolean isDown(){
+        for (int i = 0; i < obj.getArray().length; i++){
+            for (int j = 0; j < obj.getArray()[0].length; j++){
+                if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                    if(obj.getPoint().getY()+i >=19){
+                        return true;
+                    }
+                    if(isThereObject(obj.getPoint().getX() + j, obj.getPoint().getY()+i+1)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     
-    private void isDown(){
-        
+    private boolean checkCompletedLine(){
+        for (int i = 0; i < 10; i++){
+            if(!isThereObject(i, 19)){
+                return false;
+            }
+        }
+        for (Object o : objects){
+            if (o.getPoint().getY() >= 20){
+                objects.remove(o);
+            }
+            else{
+                o.moveDown();
+            }
+        }
+        return true;
     }
     
-    public void moveDown(){
-        obj.moveDown();
-    }
     
     public void moveLeft(){
         for (int i = 0; i < obj.getArray().length; i++){
             for (int j = 0; j < obj.getArray()[0].length; j++){
                 if (obj.getArray()[i][j] != Color.TRANSPARENT){
                     if(obj.getPoint().getX()+j <= 0){
+                        move = false;
+                    }
+                    else if(isThereObject(obj.getPoint().getX() + j - 1, obj.getPoint().getY()+i)){
                         move = false;
                     }
                 }
@@ -131,6 +124,9 @@ public class Game {
             for (int j = 0; j < obj.getArray()[0].length; j++){
                 if (obj.getArray()[i][j] != Color.TRANSPARENT){
                     if(obj.getPoint().getX()+j >= 9){
+                        move = false;
+                    }
+                    else if(isThereObject(obj.getPoint().getX() + j + 1, obj.getPoint().getY()+i)){
                         move = false;
                     }
                 }
@@ -167,6 +163,23 @@ public class Game {
         }
     }
     
+    private boolean isThereObject(int x, int y){
+        for (Object o : objects){
+            if (obj != o){
+                for (int i = 0; i < o.getArray().length; i++){
+                    for (int j = 0; j < o.getArray()[0].length; j++){
+                        if (o.getArray()[i][j] != Color.TRANSPARENT){
+                            //System.out.println(i + " - " + j);
+                            if(x == j + o.getPoint().getX() && y == i + o.getPoint().getY()){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;        
+    }
     public void reset(){
         time[0] = 0;
         time[1] = 0;
@@ -180,5 +193,37 @@ public class Game {
     public boolean pause(){
         pause = !pause;
         return pause;
+    }
+    
+    public ArrayList<Object> getObjects(){
+        return (objects);
+    }
+  
+    public void setTime(){
+        
+    }
+    
+    public int[] getTime(){
+        return (time);
+    }
+    
+    public int getLevel(){
+        return (level);
+    }
+    
+    public int getScore(){
+        return (score);
+    }
+    
+    public int getLines(){
+        return(lines);
+    }
+    
+    public boolean getGameOver(){
+        return (gameOver);
+    }
+    
+    public void setGameOver(){
+        gameOver = true;
     }
 }
