@@ -17,45 +17,64 @@ public class Game {
     Random random = new Random();
     private boolean gameOver = false;
     private static ArrayList<Object> objects = new ArrayList<>();
-    private int[] time = {0,0};
-    private int level = 0;
-    private int score = 0;
-    private int lines = 0;
-    private static Object obj = new Object3();
+    private static int[] time = {0,0};
+    private static int level;
+    private static int score;
+    private static int lines;
+    private static Object obj;
+    private static Object nextObj;
     private boolean pause = false;
     private boolean move = true;
     
-    
-    public void newObject(){
-    switch(random.nextInt(6)){
-            case 0:
-                obj = new Object1();
-                break;
-            case 1:
-                obj = new Object2();
-                break;
-            case 2:
-                obj = new Object3();
-                break;
-            case 3:
-                obj = new Object4();
-                break;
-            case 4:
-                obj = new Object5();
-                break;
-            case 5:
-                obj = new Object6();
-                break; 
-            case 6:
-                obj = new Object7();
-                break;
-        }
+    public void newGame(){
+        objects.clear();
+        obj = newObject();
         objects.add(obj);
+        obj.getPoint().setPoint(3, 0);
+        nextObj = newObject();
+        time[0] = 0;
+        time[1] = 0;
+        level = 0;
+        score = 0;
+        lines = 0;
+        gameOver = false;
+    }
+    
+    public void nextObject(){
+        obj = nextObj;
+        nextObj = newObject();
+        obj.getPoint().setPoint(3, 0);
+        objects.add(obj);
+    }
+    
+    private Object newObject(){
+        switch(random.nextInt(7)){
+            case 0:
+                return new Object1();
+            case 1:
+                return new Object2();
+            case 2:
+                return new Object3();
+            case 3:
+                return new Object4();
+            case 4:
+                return new Object5();
+            case 5:
+                return new Object6();
+            case 6:
+                return new Object7();
+            default:
+                return new Object1();
+        }
     }
     
     public void next(){
         if (isDown()){
-            newObject();
+            checkGameOver();
+            if(!gameOver){
+                nextObject();
+            }
+            
         }
         else{
             obj.moveDown();
@@ -79,7 +98,7 @@ public class Game {
                     if(obj.getPoint().getY()+i >=19){
                         return true;
                     }
-                    if(isThereObject(obj.getPoint().getX() + j, obj.getPoint().getY()+i+1)){
+                    else if(isThereObject(obj.getPoint().getX() + j, obj.getPoint().getY()+i+1)){
                         return true;
                     }
                 }
@@ -103,6 +122,7 @@ public class Game {
                 return false;
             }
         }
+        lines ++;
         return true;
     }
     
@@ -190,15 +210,6 @@ public class Game {
         }
         return false;        
     }
-    public void reset(){
-        time[0] = 0;
-        time[1] = 0;
-        level = 0;
-        score = 0;
-        lines = 0;
-        objects.clear();
-        newObject();
-    }
     
     public boolean pause(){
         pause = !pause;
@@ -210,7 +221,12 @@ public class Game {
     }
   
     public void setTime(){
-        
+        time[0] ++;
+        if(time[0] == 60)
+        {
+            time[0] = 0;
+            time[1] ++;
+        }
     }
     
     public int[] getTime(){
@@ -229,11 +245,26 @@ public class Game {
         return(lines);
     }
     
-    public boolean getGameOver(){
+    public boolean isGameOver(){
         return (gameOver);
     }
     
-    public void setGameOver(){
-        gameOver = true;
+    private void checkGameOver(){
+        for (int i = 0; i < obj.getArray().length; i++){
+            for (int j = 0; j < obj.getArray()[0].length; j++){
+                if (obj.getArray()[i][j] != Color.TRANSPARENT){
+                    if(obj.getPoint().getY() + i <= 0){
+                        gameOver = true;/*
+                        System.out.println("check");                        
+                        objects.remove(obj);
+                        nextObj = obj;*/
+                    }
+                }
+            }
+        }        
+    }
+    
+    public Object getNextObejct(){
+        return nextObj;
     }
 }

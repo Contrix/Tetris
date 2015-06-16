@@ -30,95 +30,103 @@ public class Tetris extends Application {
     public void start(Stage primaryStage) {
         
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root, 425, 550);
         
         Canvas canvas = new Canvas(scene.getWidth(), scene.getHeight());
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
-        
+        gm.newGame();
         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
         
         Timeline timer = new Timeline(new KeyFrame(Duration.millis(1000), (ActionEvent event) -> {
-            gm.next();
-            drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+            if(!gm.isGameOver()){
+                gm.next();
+                gm.setTime();
+                drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+            }
         }));
         timer.setCycleCount(Timeline.INDEFINITE);
         timer.play();
         
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent e) -> {
-            //System.out.println(e.getCode());
+            if(!gm.isGameOver()){
+                switch (e.getCode()) {
+                    case S:
+                        gm.next();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case A:
+                        gm.moveLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case D:
+                        gm.moveRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case Q:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case E:
+                        gm.rotateRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+
+                    case NUMPAD2:
+                        gm.next();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case NUMPAD4:
+                        gm.moveLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case NUMPAD6:
+                        gm.moveRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case NUMPAD7:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case NUMPAD9:
+                        gm.rotateRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+
+                    case DOWN:
+                        gm.next();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case LEFT:
+                        gm.moveLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case RIGHT:
+                        gm.moveRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case DELETE:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    case PAGE_DOWN:
+                        gm.rotateRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                    default:
+                        break;
+                }
+            }
+                    
             switch (e.getCode()) {
-                case S:
-                    gm.next();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case A:
-                    gm.moveLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case D:
-                    gm.moveRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case Q:
-                    gm.rotateLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case E:
-                    gm.rotateRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                    
-                case NUMPAD2:
-                    gm.next();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case NUMPAD4:
-                    gm.moveLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case NUMPAD6:
-                    gm.moveRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case NUMPAD7:
-                    gm.rotateLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case NUMPAD9:
-                    gm.rotateRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                    
-                case DOWN:
-                    gm.next();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case LEFT:
-                    gm.moveLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case RIGHT:
-                    gm.moveRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case DELETE:
-                    gm.rotateLeft();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                case PAGE_DOWN:
-                    gm.rotateRight();
-                    drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
-                    break;
-                    
                 case F5:
-                    gm.reset();
+                    gm.newGame();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                 case R:
-                    gm.reset();
+                    gm.newGame();
                     drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                     break;
                     
@@ -137,7 +145,6 @@ public class Tetris extends Application {
                     break;
             }
         });
-        
         
         root.getChildren().add(canvas);
         primaryStage.setTitle("Tetris");

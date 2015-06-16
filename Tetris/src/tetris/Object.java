@@ -16,7 +16,7 @@ public class Object {
     protected final Color t = Color.TRANSPARENT;
     protected Color c; 
     protected Color[][] array;
-    protected MyPoint point = new MyPoint(3, 0);
+    protected MyPoint point = new MyPoint(12, 6);
     protected boolean activ = true;
     
     public Color[][] getArray(){

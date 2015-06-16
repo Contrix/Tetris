@@ -14,7 +14,6 @@ import javafx.scene.paint.Color;
 public class Object5 extends Object{
     private final Color color = Color.BLUE;
     private Color[][] arrayy = {{t, c}, {t, c}, {c, c}};
-
     
     public Object5(){
         array = this.arrayy;
