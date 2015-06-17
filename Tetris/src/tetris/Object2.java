@@ -13,11 +13,12 @@ import javafx.scene.paint.Color;
  */
 public class Object2 extends Object{
     private final Color color = Color.AQUA;
-    private Color[][] arrayy = {{t, c, t, t}, {t, c, t, t}, {t, c, t, t}, {t, c, t, t}};
+    private Color[][] arrayy = {{t, t, t, t}, {c, c, c, c}, {t, t, t, t}, {t, t, t, t}};
     
     public Object2(){
         array = this.arrayy;
         c = this.color;
+        point.setPoint(11, 6);
     }
     
     @Override

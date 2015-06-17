@@ -65,5 +65,21 @@ public class Object {
     
     public void deactivate(){
         activ = false;
+        //dodělat
+    }
+    
+    public void removeRow(int y){
+        for (int i = getArray().length; i >= 0; i--){
+            for (int j = 0; j < getArray()[0].length ; j++){
+                if (i <= y){
+                    if (i > 0){
+                        getArray()[i][j] = getArray()[i-1][j];
+                    }
+                    else{
+                        getArray()[i][j] = t;
+                    }
+                }
+            }
+        }
     }
 }

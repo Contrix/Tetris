@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  */
 public class Object3 extends Object{
     private final Color color = Color.PURPLE;
-    private Color[][] arrayy = {{t, c, t}, {c, c, c}};
+    private Color[][] arrayy = {{t, c, t}, {c, c, c}, {t, t, t}};
     
     public Object3(){
         array = this.arrayy;

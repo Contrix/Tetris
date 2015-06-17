@@ -30,10 +30,6 @@ public class Drawing {
     }
     
     public void drawObjects(GraphicsContext gc){
-        /*if (!gm.getGameOver()){
-                gm.newObject();
-                gm.setGameOver();
-            }*/
         for (Object obj : gm.getObjects()){
             gc.setFill(obj.getColor());
             drawObject(gc, obj);            
@@ -46,7 +42,7 @@ public class Drawing {
             for (int j = 0; j < obj.getArray()[0].length; j++){
                 if (obj.getArray()[i][j] != Color.TRANSPARENT){
                     if ((obj.getPoint().getY()) + i <= 19){
-                    gc.fillRect((obj.getPoint().getX() + j) * px + posunX, (obj.getPoint().getY() + i) * px + posunY, px, px);
+                        gc.fillRect((obj.getPoint().getX() + j) * px + posunX, (obj.getPoint().getY() + i) * px + posunY, px, px);
                     }
                 }
             }
@@ -59,7 +55,12 @@ public class Drawing {
         
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 20; j++){
-                gc.setFill(primary);
+                if(j <3){
+                    gc.setFill(Color.BEIGE);
+                }
+                else{
+                    gc.setFill(primary);
+                }
                 gc.fillRect(i * px + posunX, j * px + posunY, px-1, px-1);
             }
         }
@@ -84,10 +85,8 @@ public class Drawing {
         gc.setTextAlign(TextAlignment.RIGHT);
         gc.fillText(String.format("© Jiří Hanák"), 415, 540);
         gc.setTextAlign(TextAlignment.LEFT);
-        gc.fillText(String.format("v 0.8"), 10, 540);
+        gc.fillText(String.format("v 0.9"), 10, 540);
         
         drawObject(gc, gm.getNextObejct());
-        
-        
     }
 }

@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
  */
 public class Game {
     Random random = new Random();
-    private boolean gameOver = false;
+    private boolean gameOver;
     private static ArrayList<Object> objects = new ArrayList<>();
     private static int[] time = {0,0};
     private static int level;
@@ -74,20 +74,10 @@ public class Game {
             if(!gameOver){
                 nextObject();
             }
-            
+            checkCompletedLine();
         }
         else{
             obj.moveDown();
-        }
-        if(checkLine(19)){//checkCompletedLine()
-            for (Object o : objects){
-                if (o.getPoint().getY() >= 20){
-                    o.deactivate();
-                }
-                else{
-                    o.moveDown();
-                }
-            }
         }
     }
 
@@ -107,13 +97,23 @@ public class Game {
         return false;
     }
     
-    private boolean checkCompletedLine(){
-        for (int i = 0; i < 20; i++){
-            if(checkLine(i)){
-                return true;
+    private void checkCompletedLine(){
+        for(int i = 0; i < 4; i++){
+            for (int j = 20; j > 0; j--){
+                if(checkLine(j)){                
+                    for (Object o : objects){
+                        if (o.getArray().length - 1 + o.getPoint().getY() >= j){
+                            if(o.getPoint().getY() <= j){
+                                o.removeRow(j - o.getPoint().getY());
+                            }
+                        }
+                        else{
+                            o.moveDown();
+                        }
+                    }
+                }
             }
         }
-        return false;
     }
     
     private boolean checkLine(int y){
@@ -182,7 +182,7 @@ public class Game {
         for (int i = 0; i < obj.getArray().length; i++){
             for (int j = 0; j < obj.getArray()[0].length; j++){
                 if (obj.getArray()[i][j] != Color.TRANSPARENT){
-                    if(obj.getPoint().getX()+j < 0 || obj.getPoint().getX()+j > 9){
+                    if(obj.getPoint().getX()+j < 0 || obj.getPoint().getX()+j > 9 || obj.getPoint().getY() + obj.getArray().length > 20){
                         return false;
                     }
                     if(isThereObject(obj.getPoint().getX() + j, obj.getPoint().getY() + i))
@@ -249,22 +249,17 @@ public class Game {
         return (gameOver);
     }
     
-    private void checkGameOver(){
-        for (int i = 0; i < obj.getArray().length; i++){
-            for (int j = 0; j < obj.getArray()[0].length; j++){
-                if (obj.getArray()[i][j] != Color.TRANSPARENT){
-                    if(obj.getPoint().getY() + i <= 0){
-                        gameOver = true;/*
-                        System.out.println("check");                        
-                        objects.remove(obj);
-                        nextObj = obj;*/
-                    }
-                }
-            }
-        }        
+    private void checkGameOver(){     
+        if(obj.getPoint().getY() <= 2){
+            gameOver = true;
+        }
     }
     
     public Object getNextObejct(){
         return nextObj;
+    }
+    
+    public Object getObject(){
+        return obj;
     }
 }
