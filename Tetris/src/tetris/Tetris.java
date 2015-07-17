@@ -53,6 +53,10 @@ public class Tetris extends Application {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent e) -> {
             if(!gm.isGameOver()){
                 switch (e.getCode()) {
+                    case W:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
                     case S:
                         gm.next();
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
@@ -74,6 +78,10 @@ public class Tetris extends Application {
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                         break;
 
+                    case NUMPAD8:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
                     case NUMPAD2:
                         gm.next();
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
@@ -95,6 +103,10 @@ public class Tetris extends Application {
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                         break;
 
+                    case UP:
+                        gm.rotateLeft();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
                     case DOWN:
                         gm.next();
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
@@ -113,6 +125,11 @@ public class Tetris extends Application {
                         break;
                     case PAGE_DOWN:
                         gm.rotateRight();
+                        drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
+                        break;
+                        
+                    case SPACE:
+                        gm.moveDown();
                         drw.drawAll(gc, canvas.getWidth(), canvas.getHeight());
                         break;
                     default:

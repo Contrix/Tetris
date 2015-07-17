@@ -80,6 +80,12 @@ public class Game {
             obj.moveDown();
         }
     }
+    
+    public void moveDown(){
+        while(!isDown()){
+            next();
+        }
+    }
 
     private boolean isDown(){
         for (int i = 0; i < obj.getArray().length; i++){
